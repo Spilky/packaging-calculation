@@ -14,5 +14,20 @@
         "psr-4": {
             "App\\": "src/"
         }
+    },
+    "require-dev": {
+        "slevomat/coding-standard": "^8.18"
+    },
+    "scripts": {
+        "check": [
+            "@check:cs"
+        ],
+        "check:cs": "phpcs",
+        "fix:cs": "phpcbf"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": false
+        }
     }
 }
