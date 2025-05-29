@@ -16,13 +16,18 @@
         }
     },
     "require-dev": {
-        "slevomat/coding-standard": "^8.18"
+        "slevomat/coding-standard": "^8.18",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-doctrine": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0"
     },
     "scripts": {
         "check": [
-            "@check:cs"
+            "@check:cs",
+            "@check:phpstan"
         ],
         "check:cs": "phpcs",
+        "check:phpstan": "phpstan analyse --memory-limit 1G",
         "fix:cs": "phpcbf"
     },
     "config": {

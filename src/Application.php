@@ -20,6 +20,9 @@ class Application
     public function run(RequestInterface $request): ResponseInterface
     {
         // your implementation entrypoint
+
+        $this->entityManager->flush();
+
         return new Response();
     }
 
