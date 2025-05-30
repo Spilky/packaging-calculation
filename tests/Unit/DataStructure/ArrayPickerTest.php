@@ -16,7 +16,7 @@ class ArrayPickerTest extends TestCase
 
 		$result = ArrayPicker::requiredInt('key', $data);
 
-		$this->assertSame(1, $result);
+		self::assertSame(1, $result);
 	}
 
 	public function testRequiredIntThrowsExceptionForMissingKey(): void
@@ -33,14 +33,13 @@ class ArrayPickerTest extends TestCase
 		ArrayPicker::requiredInt('key', ['key' => '123']);
 	}
 
-
     public function testRequiredFloatReturnsFloatForValidValue(): void
     {
         $data = ['key' => 1.5];
 
         $result = ArrayPicker::requiredFloat('key', $data);
 
-        $this->assertSame(1.5, $result);
+        self::assertSame(1.5, $result);
     }
 
     public function testRequiredFloatThrowsExceptionForMissingKey(): void
@@ -64,7 +63,7 @@ class ArrayPickerTest extends TestCase
 
         $result = ArrayPicker::requiredArray('key', $data);
 
-        $this->assertSame($expectedArray, $result);
+        self::assertSame($expectedArray, $result);
     }
 
     public function testRequiredArrayThrowsExceptionForMissingKey(): void
@@ -80,6 +79,5 @@ class ArrayPickerTest extends TestCase
 
         ArrayPicker::requiredArray('key', ['key' => 'not an array']);
     }
-
 
 }

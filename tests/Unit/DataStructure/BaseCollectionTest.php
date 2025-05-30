@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class BaseCollectionTest extends TestCase
 {
+
     public function testCollectionCanBeIterated(): void
     {
         $collection = new TestCollection([100, 200, 300]);
@@ -17,37 +18,33 @@ class BaseCollectionTest extends TestCase
             $counter++;
         }
 
-        $this->assertSame(3, $counter);
+        self::assertSame(3, $counter);
     }
-
 
     public function testCountItems(): void
     {
         $collection = new TestCollection([100, 200, 300]);
 
-        $this->assertSame(3, $collection->count());
-        $this->assertCount(3, $collection);
+        self::assertSame(3, $collection->count());
+        self::assertCount(3, $collection);
     }
-
 
     public function testIsEmpty(): void
     {
         $emptyCollection = new TestCollection([]);
         $notEmptyCollection = new TestCollection([100, 200, 300]);
 
-        $this->assertTrue($emptyCollection->isEmpty());
-        $this->assertFalse($notEmptyCollection->isEmpty());
+        self::assertTrue($emptyCollection->isEmpty());
+        self::assertFalse($notEmptyCollection->isEmpty());
     }
-
 
     public function testConvertToArray(): void
     {
         $collection = new TestCollection([100, 200, 300]);
         $expected = [100, 200, 300];
 
-        $this->assertSame($expected, $collection->toArray());
+        self::assertSame($expected, $collection->toArray());
     }
-
 
     public function testMap(): void
     {
@@ -55,18 +52,18 @@ class BaseCollectionTest extends TestCase
 
         $expected = ['100-suffix', '200-suffix', '300-suffix'];
 
-        $this->assertSame($expected, $collection->map(static fn (string $item) => $item . '-suffix'));
+        self::assertSame($expected, $collection->map(static fn (int $item) => $item . '-suffix'));
     }
-
 
     public function testGetByIdentity(): void
     {
         $collection = new TestCollection([100, 200, 300]);
 
-        $this->assertSame(100, $collection->getByIdentity(100));
+        self::assertSame(100, $collection->getByIdentity(100));
 
         $this->expectException(ItemNotFoundByIdentity::class);
 
         $collection->getByIdentity(900);
     }
+
 }

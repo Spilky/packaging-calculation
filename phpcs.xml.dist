@@ -15,6 +15,7 @@
     <arg value="s"/>
 
     <file>src/</file>
+    <file>tests/</file>
 
     <config name="installed_paths" value="../../slevomat/coding-standard"/>
 

@@ -2,7 +2,6 @@
 
 namespace App\Tests\Unit\DataStructure;
 
-
 use App\DataStructure\BaseCollection;
 
 /**
@@ -10,8 +9,10 @@ use App\DataStructure\BaseCollection;
  */
 class TestCollection extends BaseCollection
 {
+
     protected function getIdentityFunction(): callable
     {
         return static fn (int $item): int => $item;
     }
+
 }
