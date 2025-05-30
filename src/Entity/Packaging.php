@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Exception\PackagingIdNotSetYetException;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,6 +38,35 @@ class Packaging
         $this->height = $height;
         $this->length = $length;
         $this->maxWeight = $maxWeight;
+    }
+
+    public function getId(): int
+    {
+        if ($this->id === null) {
+            throw new PackagingIdNotSetYetException();
+        }
+
+        return $this->id;
+    }
+
+    public function getWidth(): float
+    {
+        return $this->width;
+    }
+
+    public function getHeight(): float
+    {
+        return $this->height;
+    }
+
+    public function getLength(): float
+    {
+        return $this->length;
+    }
+
+    public function getMaxWeight(): float
+    {
+        return $this->maxWeight;
     }
 
 }
