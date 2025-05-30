@@ -3,6 +3,7 @@
 namespace App\Product;
 
 use App\DataStructure\BaseCollection;
+use function ksort;
 
 /**
  * @extends BaseCollection<Product>
@@ -14,5 +15,13 @@ class ProductCollection extends BaseCollection
     {
         return static fn (Product $product): int => $product->id;
     }
+
+	public function sortById(): self
+	{
+		$mapById = $this->getMapByIdentity();
+		ksort($mapById);
+
+		return new self($mapById);
+	}
 
 }

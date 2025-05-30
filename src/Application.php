@@ -8,11 +8,13 @@ use App\DataStructure\Exception\MissingKeyValueException;
 use App\DataStructure\Json;
 use App\Entity\Exception\PackagingIdNotSetYetException;
 use App\Packaging\DoctrinePackagingRepository;
+use App\Packaging\Exception\MissingProductsException;
 use App\Packaging\GetSuitableBoxUseCase;
 use App\Packing\ApiPackingService;
 use App\Packing\Exception\PackingAttemptFailedException;
 use App\Packing\Exception\PackingUnavailableException;
 use App\Packing\Exception\ProductsCanNotBePackedException;
+use App\Packing\Result\DoctrinePackingResultRepository;
 use App\Product\Product;
 use App\Product\ProductCollection;
 use Doctrine\ORM\EntityManager;
@@ -38,6 +40,7 @@ class Application
     {
         $this->entityManager = $entityManager;
         $this->getSuitableBoxUseCase = new GetSuitableBoxUseCase(
+            new DoctrinePackingResultRepository($entityManager),
             new DoctrinePackagingRepository($entityManager),
             new ApiPackingService(new Client(), 'nakic80613@dlbazi.com', '04223281737e4abdacc7552daf6733ff'),
         );
@@ -53,6 +56,7 @@ class Application
      * @throws PackingAttemptFailedException
      * @throws PackingUnavailableException
      * @throws ProductsCanNotBePackedException
+     * @throws MissingProductsException
      */
     public function run(RequestInterface $request): ResponseInterface
     {
