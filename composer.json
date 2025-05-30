@@ -19,15 +19,24 @@
         "slevomat/coding-standard": "^8.18",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-doctrine": "^2.0",
-        "phpstan/phpstan-strict-rules": "^2.0"
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpunit/phpunit": "^12.1",
+        "phpstan/phpstan-phpunit": "^2.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
     },
     "scripts": {
         "check": [
             "@check:cs",
-            "@check:phpstan"
+            "@check:phpstan",
+            "@check:tests"
         ],
         "check:cs": "phpcs",
         "check:phpstan": "phpstan analyse --memory-limit 1G",
+        "check:tests": "phpunit tests",
         "fix:cs": "phpcbf"
     },
     "config": {
