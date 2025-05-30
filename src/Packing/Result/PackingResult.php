@@ -7,8 +7,8 @@ use App\Product\Product;
 use App\Product\ProductCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use function hash;
 use function json_encode;
-use function md5;
 use const JSON_THROW_ON_ERROR;
 
 #[ORM\Entity]
@@ -53,7 +53,7 @@ class PackingResult
             JSON_THROW_ON_ERROR,
         );
 
-        return md5($encodedProducts);
+        return hash('sha256', $encodedProducts);
     }
 
 }
