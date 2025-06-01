@@ -43,7 +43,11 @@ class Application
         $this->getSuitableBoxUseCase = new GetSuitableBoxUseCase(
             new DoctrinePackingResultRepository($entityManager),
             new DoctrinePackagingRepository($entityManager),
-            new ApiPackingService(new Client(), 'nakic80613@dlbazi.com', '04223281737e4abdacc7552daf6733ff'),
+            new ApiPackingService(
+                new Client(),
+                ArrayPicker::requiredString('API_USERNAME', $_ENV),
+                ArrayPicker::requiredString('API_KEY', $_ENV),
+            ),
             new BoundingBoxPackingService(),
         );
     }

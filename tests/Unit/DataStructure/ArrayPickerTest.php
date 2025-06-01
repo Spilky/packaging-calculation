@@ -56,6 +56,29 @@ class ArrayPickerTest extends TestCase
         ArrayPicker::requiredFloat('key', ['key' => 1]);
     }
 
+    public function testRequiredStringReturnsStringForValidValue(): void
+    {
+        $data = ['key' => 'value'];
+
+        $result = ArrayPicker::requiredString('key', $data);
+
+        self::assertSame('value', $result);
+    }
+
+    public function testRequiredStringThrowsExceptionForMissingKey(): void
+    {
+        $this->expectException(MissingKeyValueException::class);
+
+        ArrayPicker::requiredString('nonexistent', []);
+    }
+
+    public function testRequiredStringThrowsExceptionForInvalidType(): void
+    {
+        $this->expectException(InvalidKeyValueTypeException::class);
+
+        ArrayPicker::requiredString('key', ['key' => 1]);
+    }
+
     public function testRequiredArrayReturnsArrayForValidValue(): void
     {
         $expectedArray = ['subkey' => 'value'];

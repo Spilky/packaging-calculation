@@ -8,6 +8,7 @@ use function array_key_exists;
 use function is_array;
 use function is_float;
 use function is_int;
+use function is_string;
 
 class ArrayPicker
 {
@@ -42,6 +43,22 @@ class ArrayPicker
         }
 
         throw new InvalidKeyValueTypeException($key, 'float');
+    }
+
+    /**
+     * @param array<string|int, mixed> $data
+     * @throws MissingKeyValueException
+     * @throws InvalidKeyValueTypeException
+     */
+    public static function requiredString(string|int $key, array $data): string
+    {
+        $value = self::getKeyValue($key, $data);
+
+        if (is_string($value)) {
+            return $value;
+        }
+
+        throw new InvalidKeyValueTypeException($key, 'string');
     }
 
     /**
