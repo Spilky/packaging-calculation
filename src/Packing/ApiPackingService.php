@@ -53,7 +53,7 @@ readonly class ApiPackingService implements PackingService
 
         $request = new Request(
             'POST',
-            'https://eu.api.3dbinpacking.com/packer/packIntoMany',
+            'https://eu.api.3dbinpacking-hovno.com/packer/packIntoMany',
             [],
             json_encode($body, JSON_THROW_ON_ERROR),
         );

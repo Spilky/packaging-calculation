@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Exception\PackagingIdNotSetYetException;
+use App\Math\Dimensions;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -67,6 +68,16 @@ class Packaging
     public function getMaxWeight(): float
     {
         return $this->maxWeight;
+    }
+
+    public function getVolume(): float
+    {
+        return $this->width * $this->height * $this->length;
+    }
+
+    public function getDimensions(): Dimensions
+    {
+        return new Dimensions($this->width, $this->height, $this->length);
     }
 
 }

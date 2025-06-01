@@ -6,15 +6,16 @@ use App\DataStructure\Exception\ItemNotFoundByIdentity;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use function array_filter;
 use function array_key_exists;
 use function array_map;
 use function array_values;
 use function call_user_func;
 use function count;
+use function usort;
 
 /**
  * @template T
- * @template-covariant T
  * @implements IteratorAggregate<int, T>
  */
 abstract class BaseCollection implements IteratorAggregate, Countable
@@ -73,6 +74,27 @@ abstract class BaseCollection implements IteratorAggregate, Countable
 	{
 		return array_map($callback, $this->items);
 	}
+
+    /**
+     * @param callable(T): bool $callback
+     * @return static<T>
+     */
+    public function filter(callable $callback): static
+    {
+        return new static(array_filter($this->items, $callback));
+    }
+
+    /**
+     * @param callable(T, T): int $callback
+     * @return static<T>
+     */
+    public function sort(callable $callback): static
+    {
+        $items = $this->items;
+        usort($items, $callback);
+
+        return new static($items);
+    }
 
     /**
      * @throws ItemNotFoundByIdentity

@@ -11,6 +11,7 @@ use App\Packaging\DoctrinePackagingRepository;
 use App\Packaging\Exception\MissingProductsException;
 use App\Packaging\GetSuitableBoxUseCase;
 use App\Packing\ApiPackingService;
+use App\Packing\BoundingBoxPackingService;
 use App\Packing\Exception\PackingAttemptFailedException;
 use App\Packing\Exception\PackingUnavailableException;
 use App\Packing\Exception\ProductsCanNotBePackedException;
@@ -43,6 +44,7 @@ class Application
             new DoctrinePackingResultRepository($entityManager),
             new DoctrinePackagingRepository($entityManager),
             new ApiPackingService(new Client(), 'nakic80613@dlbazi.com', '04223281737e4abdacc7552daf6733ff'),
+            new BoundingBoxPackingService(),
         );
     }
 

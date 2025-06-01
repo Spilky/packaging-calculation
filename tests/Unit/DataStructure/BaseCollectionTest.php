@@ -55,6 +55,24 @@ class BaseCollectionTest extends TestCase
         self::assertSame($expected, $collection->map(static fn (int $item) => $item . '-suffix'));
     }
 
+    public function testFilterItems(): void
+    {
+        $collection = new TestCollection([100, 200, 300]);
+
+        $expected = [200];
+
+        self::assertSame($expected, $collection->filter(static fn (int $item) => $item === 200)->toArray());
+    }
+
+    public function testSortItems(): void
+    {
+        $collection = new TestCollection([200, 300, 100]);
+
+        $expected = [100, 200, 300];
+
+        self::assertSame($expected, $collection->sort(static fn (int $a, $b) => $a <=> $b)->toArray());
+    }
+
     public function testGetByIdentity(): void
     {
         $collection = new TestCollection([100, 200, 300]);

@@ -15,4 +15,11 @@ class PackagingCollection extends BaseCollection
         return static fn (Packaging $packaging): int => $packaging->getId();
     }
 
+    public function sortByVolume(): self
+    {
+        return $this->sort(
+            static fn (Packaging $a, Packaging $b): int => $a->getVolume() <=> $b->getVolume(),
+        );
+    }
+
 }

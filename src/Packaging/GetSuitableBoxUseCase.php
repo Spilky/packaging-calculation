@@ -19,7 +19,8 @@ readonly class GetSuitableBoxUseCase
     public function __construct(
 		private PackingResultRepository $packingResultRepository,
         private PackagingRepository $packagingRepository,
-        private PackingService $packingService,
+        private PackingService $primaryPackingService,
+        private PackingService $fallbackPackingService,
     )
     {
     }
@@ -43,9 +44,15 @@ readonly class GetSuitableBoxUseCase
 			return $packingResult->getPackaging();
 		}
 
-        $packaging = $this->packingService->pack($products, $this->packagingRepository->getAll());
+        $availableBoxes = $this->packagingRepository->getAll();
 
-		$this->packingResultRepository->add(new PackingResult($products, $packaging));
+        try {
+            $packaging = $this->primaryPackingService->pack($products, $availableBoxes);
+        } catch (PackingUnavailableException) {
+            return $this->fallbackPackingService->pack($products, $availableBoxes);
+        }
+
+        $this->packingResultRepository->add(new PackingResult($products, $packaging));
 
 		return $packaging;
     }
