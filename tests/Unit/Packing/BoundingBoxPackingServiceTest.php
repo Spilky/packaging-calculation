@@ -2,9 +2,9 @@
 
 namespace App\Tests\Unit\Packing;
 
-use App\Entity\Packaging;
-use App\Entity\PackagingCollection;
 use App\Math\Dimensions;
+use App\Packaging\Packaging;
+use App\Packaging\PackagingCollection;
 use App\Packing\BoundingBoxPackingService;
 use App\Packing\Exception\ProductsCanNotBePackedException;
 use App\Product\ProductCollection;

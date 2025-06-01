@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace App\Entity;
+namespace App\Packaging;
 
-use App\Entity\Exception\PackagingIdNotSetYetException;
 use App\Math\Dimensions;
+use App\Packaging\Exception\PackagingIdNotSetYetException;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 

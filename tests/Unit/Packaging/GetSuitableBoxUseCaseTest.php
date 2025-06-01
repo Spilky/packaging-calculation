@@ -2,9 +2,9 @@
 
 namespace App\Tests\Unit\Packaging;
 
-use App\Entity\Packaging;
 use App\Packaging\Exception\MissingProductsException;
 use App\Packaging\GetSuitableBoxUseCase;
+use App\Packaging\Packaging;
 use App\Packing\Result\PackingResult;
 use App\Product\Product;
 use App\Product\ProductCollection;

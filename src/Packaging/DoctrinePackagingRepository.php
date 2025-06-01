@@ -2,8 +2,6 @@
 
 namespace App\Packaging;
 
-use App\Entity\Packaging;
-use App\Entity\PackagingCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 

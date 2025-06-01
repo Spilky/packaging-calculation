@@ -2,7 +2,6 @@
 
 namespace App\Packaging;
 
-use App\Entity\Packaging;
 use App\Packaging\Exception\MissingProductsException;
 use App\Packing\Exception\PackingAttemptFailedException;
 use App\Packing\Exception\PackingUnavailableException;

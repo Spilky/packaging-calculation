@@ -2,8 +2,8 @@
 
 namespace App\Tests\Unit\Packaging;
 
-use App\Entity\Packaging;
-use App\Entity\PackagingCollection;
+use App\Packaging\Packaging;
+use App\Packaging\PackagingCollection;
 use App\Packing\Exception\PackingUnavailableException;
 use App\Packing\Exception\ProductsCanNotBePackedException;
 use App\Packing\PackingService;

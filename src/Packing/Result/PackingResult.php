@@ -2,7 +2,7 @@
 
 namespace App\Packing\Result;
 
-use App\Entity\Packaging;
+use App\Packaging\Packaging;
 use App\Product\Product;
 use App\Product\ProductCollection;
 use Doctrine\DBAL\Types\Types;

@@ -2,8 +2,6 @@
 
 namespace App\Packaging;
 
-use App\Entity\PackagingCollection;
-
 interface PackagingRepository
 {
 

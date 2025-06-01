@@ -2,8 +2,8 @@
 
 namespace App\Packing;
 
-use App\Entity\Packaging;
-use App\Entity\PackagingCollection;
+use App\Packaging\Packaging;
+use App\Packaging\PackagingCollection;
 use App\Packing\Exception\PackingAttemptFailedException;
 use App\Packing\Exception\PackingUnavailableException;
 use App\Packing\Exception\ProductsCanNotBePackedException;

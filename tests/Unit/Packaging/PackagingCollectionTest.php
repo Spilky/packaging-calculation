@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace App\Tests\Unit\Entity;
+namespace App\Tests\Unit\Packaging;
 
-use App\Entity\Packaging;
-use App\Entity\PackagingCollection;
+use App\Packaging\Packaging;
+use App\Packaging\PackagingCollection;
 use PHPUnit\Framework\TestCase;
 
 class PackagingCollectionTest extends TestCase
