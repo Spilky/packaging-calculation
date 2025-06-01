@@ -14,10 +14,10 @@ use App\Packing\Exception\PackingUnavailableException;
 use App\Packing\Exception\ProductsCanNotBePackedException;
 use App\Product\Product;
 use App\Product\ProductCollection;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Psr\Http\Client\ClientInterface;
 use function count;
 use function json_encode;
 use const JSON_THROW_ON_ERROR;
@@ -59,7 +59,7 @@ readonly class ApiPackingService implements PackingService
         );
 
         try {
-            $httpResponse = $this->httpClient->sendRequest($request);
+            $httpResponse = $this->httpClient->send($request);
         } catch (ClientExceptionInterface $e) {
             throw new PackingUnavailableException($e);
         }
