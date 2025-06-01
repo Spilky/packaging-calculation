@@ -3,11 +3,35 @@
 namespace App\Tests\Unit\Math;
 
 use App\Math\Dimensions;
+use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DimensionsTest extends TestCase
 {
+
+    public function testConstructWithValidValues(): void
+    {
+        $dimensions = new Dimensions(2.0, 3.5, 4.1);
+        self::assertSame(2.0, $dimensions->width);
+        self::assertSame(3.5, $dimensions->height);
+        self::assertSame(4.1, $dimensions->length);
+    }
+
+    public function testConstructWithInvalidValues(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Width must be greater than 0');
+        new Dimensions(-1.0, 2.0, 3.0);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Height must be greater than 0');
+        new Dimensions(2.0, -1.0, 3.0);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Length must be greater than 0');
+        new Dimensions(2.0, 3.0, -1.0);
+    }
 
     #[DataProvider('fitsInProvider')]
     public function testFitsIn(Dimensions $box, Dimensions $targetBox, bool $expected): void

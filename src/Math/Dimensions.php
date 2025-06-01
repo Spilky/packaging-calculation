@@ -2,6 +2,7 @@
 
 namespace App\Math;
 
+use InvalidArgumentException;
 use function array_any;
 
 readonly class Dimensions
@@ -13,6 +14,15 @@ readonly class Dimensions
         public float $length,
     )
     {
+        if ($this->width <= 0.0) {
+            throw new InvalidArgumentException('Width must be greater than 0');
+        }
+        if ($this->height <= 0.0) {
+            throw new InvalidArgumentException('Height must be greater than 0');
+        }
+        if ($this->length <= 0.0) {
+            throw new InvalidArgumentException('Length must be greater than 0');
+        }
     }
 
     public function fitsIn(self $boxDimensions): bool

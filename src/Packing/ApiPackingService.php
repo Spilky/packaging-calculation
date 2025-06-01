@@ -96,9 +96,9 @@ readonly class ApiPackingService implements PackingService
             Product $product
         ) => [
             'id' => $product->id,
-            'w' => $product->width,
-            'h' => $product->height,
-            'd' => $product->length,
+            'w' => $product->dimensions->width,
+            'h' => $product->dimensions->height,
+            'd' => $product->dimensions->length,
             'wg' => $product->weight,
             'q' => 1,
             'vr' => 1,

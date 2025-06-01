@@ -41,9 +41,9 @@ class ProductCollection extends BaseCollection
         $boundingLength = 0.0;
 
         foreach ($this as $product) {
-            $boundingWidth += $product->width;
-            $boundingHeight = max($boundingHeight, $product->height);
-            $boundingLength = max($boundingLength, $product->length);
+            $boundingWidth += $product->dimensions->width;
+            $boundingHeight = max($boundingHeight, $product->dimensions->height);
+            $boundingLength = max($boundingLength, $product->dimensions->length);
         }
 
         return new Dimensions($boundingWidth, $boundingHeight, $boundingLength);

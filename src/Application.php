@@ -23,6 +23,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use GuzzleHttp\Client;
+use InvalidArgumentException;
 use JsonException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -78,7 +79,7 @@ class Application
                     ArrayPicker::requiredFloat('weight', $productData),
                 ), $decodedProducts),
             );
-        } catch (JsonException | InvalidKeyValueTypeException | MissingKeyValueException $e) {
+        } catch (JsonException | InvalidKeyValueTypeException | MissingKeyValueException | InvalidArgumentException $e) {
             return JsonResponse::createError(sprintf('Invalid request: %s', $e->getMessage()));
         }
 

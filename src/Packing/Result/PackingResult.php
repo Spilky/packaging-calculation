@@ -45,9 +45,9 @@ class PackingResult
         $encodedProducts = json_encode(
             $sortedProducts->map(static fn (Product $product): array => [
                 'id' => $product->id,
-                'width' => $product->width,
-                'height' => $product->height,
-                'length' => $product->length,
+                'width' => $product->dimensions->width,
+                'height' => $product->dimensions->height,
+                'length' => $product->dimensions->length,
                 'weight' => $product->weight,
             ]),
             JSON_THROW_ON_ERROR,
