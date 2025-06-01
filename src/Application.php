@@ -7,6 +7,7 @@ use App\DataStructure\Exception\InvalidKeyValueTypeException;
 use App\DataStructure\Exception\MissingKeyValueException;
 use App\DataStructure\Json;
 use App\Entity\Exception\PackagingIdNotSetYetException;
+use App\Http\JsonResponse;
 use App\Packaging\DoctrinePackagingRepository;
 use App\Packaging\Exception\MissingProductsException;
 use App\Packaging\GetSuitableBoxUseCase;
@@ -22,13 +23,11 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
 use JsonException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use function array_map;
-use function json_encode;
-use const JSON_THROW_ON_ERROR;
+use function sprintf;
 
 class Application
 {
@@ -53,41 +52,45 @@ class Application
     }
 
     /**
-     * @throws InvalidKeyValueTypeException
      * @throws JsonException
-     * @throws MissingKeyValueException
      * @throws ORMException
      * @throws OptimisticLockException
      * @throws PackagingIdNotSetYetException
      * @throws PackingAttemptFailedException
      * @throws PackingUnavailableException
-     * @throws ProductsCanNotBePackedException
-     * @throws MissingProductsException
      */
     public function run(RequestInterface $request): ResponseInterface
     {
         $body = $request->getBody()->getContents();
 
-        $decodedBody = Json::decode($body);
+        try {
+            $decodedBody = Json::decode($body);
 
-        /** @var list<array<string, mixed>> $decodedProducts */
-        $decodedProducts = ArrayPicker::requiredArray('products', $decodedBody);
+            /** @var list<array<string, mixed>> $decodedProducts */
+            $decodedProducts = ArrayPicker::requiredArray('products', $decodedBody);
 
-        $products = new ProductCollection(
-            array_map(static fn (array $productData): Product => new Product(
-                ArrayPicker::requiredInt('id', $productData),
-                ArrayPicker::requiredFloat('width', $productData),
-                ArrayPicker::requiredFloat('height', $productData),
-                ArrayPicker::requiredFloat('length', $productData),
-                ArrayPicker::requiredFloat('weight', $productData),
-            ), $decodedProducts),
-        );
+            $products = new ProductCollection(
+                array_map(static fn (array $productData): Product => new Product(
+                    ArrayPicker::requiredInt('id', $productData),
+                    ArrayPicker::requiredFloat('width', $productData),
+                    ArrayPicker::requiredFloat('height', $productData),
+                    ArrayPicker::requiredFloat('length', $productData),
+                    ArrayPicker::requiredFloat('weight', $productData),
+                ), $decodedProducts),
+            );
+        } catch (JsonException | InvalidKeyValueTypeException | MissingKeyValueException $e) {
+            return JsonResponse::createError(sprintf('Invalid request: %s', $e->getMessage()));
+        }
 
-        $packaging = $this->getSuitableBoxUseCase->execute($products);
+        try {
+            $packaging = $this->getSuitableBoxUseCase->execute($products);
+        } catch (MissingProductsException | ProductsCanNotBePackedException $e) {
+            return JsonResponse::createError($e->getMessage());
+        }
 
         $this->entityManager->flush();
 
-        return new Response(body: json_encode(['packagingId' => $packaging->getId()], flags: JSON_THROW_ON_ERROR));
+        return JsonResponse::createOk(['packagingId' => $packaging->getId()]);
     }
 
 }

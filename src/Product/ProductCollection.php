@@ -5,7 +5,6 @@ namespace App\Product;
 use App\DataStructure\BaseCollection;
 use App\Math\Dimensions;
 use function array_reduce;
-use function ksort;
 use function max;
 
 /**
@@ -19,13 +18,12 @@ class ProductCollection extends BaseCollection
         return static fn (Product $product): int => $product->id;
     }
 
-	public function sortById(): self
-	{
-		$mapById = $this->getMapByIdentity();
-		ksort($mapById);
-
-		return new self($mapById);
-	}
+    public function sortById(): self
+    {
+        return $this->sort(
+            static fn (Product $a, Product $b): int => $a->id <=> $b->id,
+        );
+    }
 
     public function sumWeight(): float
     {
